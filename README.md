@@ -43,8 +43,8 @@ Untuk menjalankan aplikasi ini, Anda memerlukan:
 
 1.  **Clone repositori (jika sudah diunggah ke GitHub):**
     ```bash
-    git clone [https://github.com/NAMA_PENGGUNA_ANDA/NAMA_REPOSITORI_ANDA.git](https://github.com/NAMA_PENGGUNA_ANDA/NAMA_REPOSITORI_ANDA.git)
-    cd NAMA_REPOSITORI_ANDA
+    git clone [https://github.com/Danzz2706/TUGAS BESAR ALPRO.git](https://github.com/NAMA_PENGGUNA_ANDA/NAMA_REPOSITORI_ANDA.git)
+    cd TUGAS BESAR ALPRO
     ```
 2.  **Atau, jika Anda memiliki file `main.go` secara lokal:**
     Pastikan Anda berada di direktori yang berisi file `main.go`.
