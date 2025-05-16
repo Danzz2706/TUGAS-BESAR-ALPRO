@@ -10,10 +10,9 @@ type Hewan struct {
 	Pemilik string
 }
 
-const maxHewan = 30
+const maxHewan = 100
 var dataHewan [maxHewan]Hewan
 var jumlahData int
-jbcvjbkabjvja
 func main() {
 	menu()
 }
