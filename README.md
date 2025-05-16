@@ -43,7 +43,7 @@ Untuk menjalankan aplikasi ini, Anda memerlukan:
 
 1.  **Clone repositori (jika sudah diunggah ke GitHub):**
     ```bash
-    git clone [https://github.com/Danzz2706/TUGAS BESAR ALPRO.git](https://github.com/NAMA_PENGGUNA_ANDA/NAMA_REPOSITORI_ANDA.git)
+    git clone [https://github.com/Danzz2706/TUGAS BESAR ALPRO.git]
     cd TUGAS BESAR ALPRO
     ```
 2.  **Atau, jika Anda memiliki file `main.go` secara lokal:**
@@ -76,4 +76,5 @@ Untuk menjalankan aplikasi ini, Anda memerlukan:
 
 Setelah aplikasi berjalan, Anda akan melihat menu utama dengan berbagai pilihan. Masukkan nomor pilihan yang sesuai untuk melakukan operasi yang diinginkan. Ikuti instruksi yang muncul di layar untuk setiap operasi.
 
-Contoh:
+Contoh:![image](https://github.com/user-attachments/assets/61ef7506-4ff1-42fc-ade0-c5bc4c9e81a2)
+
