@@ -1,6 +1,6 @@
 # Manajemen Data Hewan (Go)
 
-![Go Version](https://img.shields.io/badge/Go-1.18%2B-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green.svg) Aplikasi konsol sederhana yang ditulis dalam bahasa Go untuk melakukan manajemen data hewan. Aplikasi ini memungkinkan pengguna untuk menambah, menampilkan, mengedit, menghapus, dan melakukan berbagai operasi lain terkait data hewan.
+![Go Version](https://img.shields.io/badge/Go-1.18%2B-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green.svg) Aplikasi konsol sederhana yang ditulis dalam bahasa Go untuk melakukan manajemen data hewan. Aplikasi ini memungkinkan pengguna untuk menambah, menampilkan, mengedit, menghapus, dan melakukan berbagai operasi lain terkait data hewan. Dan saya membuat program ini untuk memenuhi tugas besar algoritma pemrograman
 
 ## Daftar Isi
 
