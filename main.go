@@ -17,7 +17,6 @@ func main() {
 	menu()
 } 
 
-// hehehehe
 
 func menu() {
 	for {
