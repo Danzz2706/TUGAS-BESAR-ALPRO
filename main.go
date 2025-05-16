@@ -15,7 +15,9 @@ var dataHewan [maxHewan]Hewan
 var jumlahData int
 func main() {
 	menu()
-}
+} 
+
+// hehehehe
 
 func menu() {
 	for {
