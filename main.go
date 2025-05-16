@@ -13,7 +13,7 @@ type Hewan struct {
 const maxHewan = 30
 var dataHewan [maxHewan]Hewan
 var jumlahData int
-
+jbcvjbkabjvja
 func main() {
 	menu()
 }
