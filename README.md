@@ -10,9 +10,7 @@
     * [Mendapatkan Kode](#mendapatkan-kode)
     * [Menjalankan Aplikasi](#menjalankan-aplikasi)
 * [Penggunaan](#penggunaan)
-* [Struktur Proyek](#struktur-proyek-opsional)
-* [Kontribusi](#kontribusi-opsional)
-* [Lisensi](#lisensi)
+
 
 ## Fitur
 
