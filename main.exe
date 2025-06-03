@@ -16,7 +16,7 @@ var dataHewan [maxHewan]Hewan
 var jumlahData int
 
 func main() {
-	dataHewan = [maxHewan]Hewan{
+	dataHewan = [maxHewan]Hewan{ //data dummy
 		{"K001", "Kucing", "Oyen", 3, "Aldi"},
 		{"A002", "Anjing", "Bruno", 5, "Citra"},
 		{"K003", "Kelinci", "Lulu", 2, "Dimas"},
@@ -50,7 +50,7 @@ func menu() {
 		fmt.Println("╠════════════════════════════════════════════════════════════════════════════════════════════════════╣")
 		fmt.Println("║                                         Created by                                                 ║")
 		fmt.Println("║                                   Zaidan Kamil Munadi                                              ║")
-		fmt.Println("║                                   Roby Ariga Siagian                                               ║")
+		fmt.Println("║                                    Roby Ariga Siagian                                              ║")
 		fmt.Println("╠════════════════════════════════════════════════════════════════════════════════════════════════════╣")
 		fmt.Println("║ No │ Menu                                                                                          ║")
 		fmt.Println("╠════╪═══════════════════════════════════════════════════════════════════════════════════════════════╣")
@@ -59,12 +59,12 @@ func menu() {
 		fmt.Println("║  3 │ Hitung Rata-rata Umur                                                                         ║")
 		fmt.Println("║  4 │ Cari Hewan Tertua dan Termuda                                                                 ║")
 		fmt.Println("║  5 │ Sorting Berdasarkan Nama Pemilik (A-Z)                                                        ║")
-		fmt.Println("║  6 │ Cari Hewan Berdasarkan Nama                                                                   ║")
-		fmt.Println("║  7 │ Cari Hewan Berdasarkan ID (Binary Search)                                                     ║")
+		fmt.Println("║  6 │ Cari Hewan Berdasarkan Nama Panggilan                                                         ║")
+		fmt.Println("║  7 │ Cari Hewan Berdasarkan ID                                                                     ║")
 		fmt.Println("║  8 │ Edit Data Hewan                                                                               ║")
 		fmt.Println("║  9 │ Hapus Data Hewan                                                                              ║")
 		fmt.Println("║ 10 │ Urutkan Berdasarkan Umur Dari Tertua                                                          ║")
-		fmt.Println("║ 11 │ Urutkan Berdasarkan Umur Dari Termuda (Insertion Sort)                                        ║")
+		fmt.Println("║ 11 │ Urutkan Berdasarkan Umur Dari Termuda                                                         ║")
 		fmt.Println("║ 12 │ Statistik Berdasarkan Jenis                                                                   ║")
 		fmt.Println("║  0 │ Keluar                                                                                        ║")
 		fmt.Println("╚════════════════════════════════════════════════════════════════════════════════════════════════════╝")
@@ -84,11 +84,11 @@ func menu() {
 		} else if pilihan == 3 {
 			rataRataUmur()
 		} else if pilihan == 4 {
-			temukanTuaMuda()
+			temukanTuaMuda()//sequential search
 		} else if pilihan == 5 {
-			sortByPemilik()
+			sortByPemilik()//insertion sort
 		} else if pilihan == 6 {
-			searchHewan()
+			searchHewan()//min max
 		} else if pilihan == 7 {
 			binarySearchByID()
 		} else if pilihan == 8 {
@@ -107,42 +107,61 @@ func menu() {
 	}
 }
 
+func mengandungAngka(s string) bool {
+	for i := 0; i < 50; i++ { 
+		if i >= len(s) {
+			break
+		}
+		if s[i] >= '0' && s[i] <= '9' {
+			return true
+		}
+	}
+	return false
+}
+
 func tambahData() {
 	var h Hewan
+
 	if jumlahData >= maxHewan {
 		fmt.Println("Data penuh, tidak bisa menambahkan lagi.")
 		return
 	}
+
 	fmt.Print("Masukkan ID Hewan: ")
 	fmt.Scanln(&h.ID)
-	if h.ID == "" {
+	if h.ID == ""  {
 		fmt.Println("ID tidak boleh kosong!")
 		return
 	}
+
 	fmt.Print("Masukkan Jenis Hewan: ")
 	fmt.Scanln(&h.Jenis)
-	if h.Jenis == "" {
-		fmt.Println("Jenis tidak boleh kosong!")
+	if h.Jenis == "" || mengandungAngka(h.Jenis) {
+		fmt.Println("Jenis tidak boleh kosong atau mengandung angka!")
 		return
 	}
-	fmt.Print("Masukkan Nama Hewan: ")
+
+	fmt.Print("Masukkan Nama Panggilan Hewan: ")
 	fmt.Scanln(&h.Nama)
-	if h.Nama == "" {
-		fmt.Println("Nama tidak boleh kosong!")
+	if h.Nama == "" || mengandungAngka(h.Nama) {
+		fmt.Println("Nama tidak boleh kosong atau mengandung angka!")
 		return
 	}
+
 	fmt.Print("Masukkan Umur Hewan: ")
 	fmt.Scanln(&h.Umur)
 	if h.Umur < 0 {
 		fmt.Println("Umur tidak boleh negatif!")
 		return
 	}
+
 	fmt.Print("Masukkan Nama Pemilik: ")
 	fmt.Scanln(&h.Pemilik)
-	if h.Pemilik == "" {
-		fmt.Println("Nama Pemilik tidak boleh kosong!")
+	if h.Pemilik == "" || mengandungAngka(h.Pemilik) {
+		fmt.Println("Nama Pemilik tidak boleh kosong atau mengandung angka!")
 		return
 	}
+
 	dataHewan[jumlahData] = h
 	jumlahData++
 	fmt.Println("Data berhasil ditambahkan!")
@@ -183,7 +202,7 @@ func rataRataUmur() {
 	fmt.Println("╚════════════════════════════════════════════════════════════════════════════════════════════════════╝")
 }
 
-func temukanTuaMuda() {
+func temukanTuaMuda() { //min max
 	if jumlahData == 0 {
 		fmt.Println("Tidak ada data.")
 		return
@@ -211,7 +230,62 @@ func temukanTuaMuda() {
 	fmt.Println("╚══════════╩═══════════════╩══════════════════╩══════════════════╩══════╩═══════════════════════╝")
 }
 
-func sortByID() {
+func sortByPemilik() { //insertion sort
+	for i := 1; i < jumlahData; i++ {
+		temp := dataHewan[i]
+		j := i - 1
+		for j >= 0 && dataHewan[j].Pemilik > temp.Pemilik {
+			dataHewan[j+1] = dataHewan[j]
+			j--
+		}
+		dataHewan[j+1] = temp
+	}
+	fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                         📊 Data Diurutkan Berdasarkan Nama Pemilik (A-Z) 📊                        ║")
+	fmt.Println("╠════╦══════════════╦══════════════════════╦══════════════════════════╦══════╦═══════════════════════╣")
+	fmt.Println("║ No │ ID Hewan     │ Jenis Hewan          │ Nama Hewan               │ Umur │ Nama Pemilik          ║")
+	fmt.Println("╠════╬══════════════╬══════════════════════╬══════════════════════════╬══════╬═══════════════════════╣")
+
+	for i := 0; i < jumlahData; i++ {
+		h := dataHewan[i]
+		fmt.Printf("║ %-2d │ %-12s │ %-20s │ %-24s │ %-4d │ %-21s ║\n",
+			i+1, h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
+	}
+	fmt.Println("╚════╩══════════════╩══════════════════════╩══════════════════════════╩══════╩═══════════════════════╝")
+}
+
+func searchHewan() { //sequential search
+	var nama string
+	fmt.Print("Masukkan nama panggilan hewan yang dicari: (contoh: Oyen): ")
+	fmt.Scanln(&nama)
+
+	ditemukan := false
+
+	fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                                     🔎 HASIL PENCARIAN 🔎                                          ║")
+	fmt.Println("╠════╦══════════════╦══════════════════════╦══════════════════════════╦══════╦═══════════════════════╣")
+	fmt.Println("║ No │ ID Hewan     │ Jenis Hewan          │ Nama Hewan               │ Umur │ Nama Pemilik          ║")
+	fmt.Println("╠════╬══════════════╬══════════════════════╬══════════════════════════╬══════╬═══════════════════════╣")
+
+	count := 0
+	for i := 0; i < jumlahData; i++ {
+		if dataHewan[i].Nama == nama {
+			h := dataHewan[i]
+			count++
+			fmt.Printf("║ %-2d │ %-12s │ %-20s │ %-24s │ %-4d │ %-21s ║\n",
+				count, h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
+			ditemukan = true
+		}
+	}
+
+	if !ditemukan {
+		fmt.Println("║                                       Data tidak ditemukan.                                        ║")
+	}
+
+	fmt.Println("╚════╩══════════════╩══════════════════════╩══════════════════════════╩══════╩═══════════════════════╝")
+}
+
+func sortByID() { //insertion sort
 	for i := 1; i < jumlahData; i++ {
 		temp := dataHewan[i]
 		j := i - 1
@@ -223,7 +297,7 @@ func sortByID() {
 	}
 }
 
-func binarySearchByID() {
+func binarySearchByID() { //binary search
 	var id string
 	fmt.Print("Masukkan ID hewan yang dicari: (contoh K001): ")
 	fmt.Scanln(&id)
@@ -264,39 +338,9 @@ func binarySearchByID() {
 	}
 }
 
-func searchHewan() {
-	var nama string
-	fmt.Print("Masukkan nama hewan yang dicari: (contoh: Oyen): ")
-	fmt.Scanln(&nama)
-
-	ditemukan := false
-
-	fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
-	fmt.Println("║                                     🔎 HASIL PENCARIAN 🔎                                          ║")
-	fmt.Println("╠════╦══════════════╦══════════════════════╦══════════════════════════╦══════╦═══════════════════════╣")
-	fmt.Println("║ No │ ID Hewan     │ Jenis Hewan          │ Nama Hewan               │ Umur │ Nama Pemilik          ║")
-	fmt.Println("╠════╬══════════════╬══════════════════════╬══════════════════════════╬══════╬═══════════════════════╣")
-
-	count := 0
-	for i := 0; i < jumlahData; i++ {
-		if dataHewan[i].Nama == nama {
-			h := dataHewan[i]
-			count++
-			fmt.Printf("║ %-2d │ %-12s │ %-20s │ %-24s │ %-4d │ %-21s ║\n",
-				count, h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
-			ditemukan = true
-		}
-	}
-
-	if !ditemukan {
-		fmt.Println("║                                       Data tidak ditemukan.                                        ║")
-	}
-
-	fmt.Println("╚════╩══════════════╩══════════════════════╩══════════════════════════╩══════╩═══════════════════════╝")
-}
 func editData() {
 	var id string
-	fmt.Print("Masukkan ID hewan yang ingin diedit: (contoh K001): ")
+	fmt.Print("Masukkan ID hewan yang ingin diedit (contoh K001): ")
 	fmt.Scanln(&id)
 	ditemukan := false
 
@@ -304,14 +348,28 @@ func editData() {
 		if dataHewan[i].ID == id {
 			ditemukan = true
 			fmt.Println("Data ditemukan. Silakan masukkan data baru.")
-			fmt.Print("Jenis Baru: ")
-			fmt.Scanln(&dataHewan[i].Jenis)
+
 			fmt.Print("Nama Baru: ")
 			fmt.Scanln(&dataHewan[i].Nama)
+			if dataHewan[i].Nama == "" || mengandungAngka(dataHewan[i].Nama) {
+				fmt.Println("Nama tidak boleh kosong atau mengandung angka!")
+				return
+			}
+
 			fmt.Print("Umur Baru: ")
 			fmt.Scanln(&dataHewan[i].Umur)
+			if dataHewan[i].Umur < 0 {
+				fmt.Println("Umur tidak boleh negatif!")
+				return
+			}
+
 			fmt.Print("Pemilik Baru: ")
 			fmt.Scanln(&dataHewan[i].Pemilik)
+			if dataHewan[i].Pemilik == "" || mengandungAngka(dataHewan[i].Pemilik) {
+				fmt.Println("Nama Pemilik tidak boleh kosong atau mengandung angka!")
+				return
+			}
+
 			fmt.Println("Data berhasil diperbarui!")
 			return
 		}
@@ -322,9 +380,10 @@ func editData() {
 	}
 }
 
+
 func hapusData() {
 	var id string
-	fmt.Print("Masukkan ID hewan yang ingin dihapus: contoh K001 ")
+	fmt.Print("Masukkan ID hewan yang ingin dihapus: contoh K001: ")
 	fmt.Scanln(&id)
 	dihapus := false
 
@@ -343,6 +402,61 @@ func hapusData() {
 	if !dihapus {
 		fmt.Println("Data tidak ditemukan.")
 	}
+}
+
+func selectionSortUmur() { //selection sort  //descending tua -> muda
+	var i, idx, pass int
+	var temp Hewan
+
+	for pass = 0; pass < jumlahData-1; pass++ {
+		idx = pass
+
+		for i = pass + 1; i < jumlahData; i++ {
+			if dataHewan[i].Umur > dataHewan[idx].Umur {
+				idx = i
+			}
+		}
+
+		temp = dataHewan[pass]
+		dataHewan[pass] = dataHewan[idx]
+		dataHewan[idx] = temp
+	}
+	fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                  📉 Data Diurutkan Berdasarkan Umur (Tertua -> Termuda) 📉                         ║")
+	fmt.Println("╠════╦══════════════╦══════════════════════╦══════════════════════════╦══════╦═══════════════════════╣")
+	fmt.Println("║ No │ ID Hewan     │ Jenis Hewan          │ Nama Hewan               │ Umur │ Nama Pemilik          ║")
+	fmt.Println("╠════╬══════════════╬══════════════════════╬══════════════════════════╬══════╬═══════════════════════╣")
+
+	for i = 0; i < jumlahData; i++ {
+		h := dataHewan[i]
+		fmt.Printf("║ %-2d │ %-12s │ %-20s │ %-24s │ %-4d │ %-21s ║\n",
+			i+1, h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
+	}
+	fmt.Println("╚════╩══════════════╩══════════════════════╩══════════════════════════╩══════╩═══════════════════════╝")
+}
+
+func insertionSortUmur() { //insertion sort  //ascending muda -> tua
+	for i := 1; i < jumlahData; i++ {
+		temp := dataHewan[i]
+		j := i - 1
+		for j >= 0 && dataHewan[j].Umur > temp.Umur {
+			dataHewan[j+1] = dataHewan[j]
+			j--
+		}
+		dataHewan[j+1] = temp
+	}
+	fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                  📈 Data Diurutkan Berdasarkan Umur (Termuda -> Tertua) 📈                         ║")
+	fmt.Println("╠════╦══════════════╦══════════════════════╦══════════════════════════╦══════╦═══════════════════════╣")
+	fmt.Println("║ No │ ID Hewan     │ Jenis Hewan          │ Nama Hewan               │ Umur │ Nama Pemilik          ║")
+	fmt.Println("╠════╬══════════════╬══════════════════════╬══════════════════════════╬══════╬═══════════════════════╣")
+
+	for i := 0; i < jumlahData; i++ {
+		h := dataHewan[i]
+		fmt.Printf("║ %-2d │ %-12s │ %-20s │ %-24s │ %-4d │ %-21s ║\n",
+			i+1, h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
+	}
+	fmt.Println("╚════╩══════════════╩══════════════════════╩══════════════════════════╩══════╩═══════════════════════╝")
 }
 
 func statistikJenis() {
@@ -380,91 +494,11 @@ func statistikJenis() {
 	fmt.Println("╠════╬═════════════════════════════════════════════════════════════╬═════════════════════════════╣")
 
 	if uniqueJenisSekarang == 0 {
-		fmt.Println("║                   Tidak ada data hewan untuk ditampilkan statistik.                     ║") // Disesuaikan agar pas
+		fmt.Println("║                   Tidak ada data hewan untuk ditampilkan statistik.                     ║") 
 	} else {
 		for i := 0; i < uniqueJenisSekarang; i++ {
 			fmt.Printf("║ %-2d │ %-59s │ %27d ║\n", i+1, jenisNama[i], jenisCounter[i])
 		}
 	}
 	fmt.Println("╚════╩═════════════════════════════════════════════════════════════╩═════════════════════════════╝")
-}
-
-
-func sortByPemilik() {
-	for i := 1; i < jumlahData; i++ {
-		temp := dataHewan[i]
-		j := i - 1
-		for j >= 0 && dataHewan[j].Pemilik > temp.Pemilik {
-			dataHewan[j+1] = dataHewan[j]
-			j--
-		}
-		dataHewan[j+1] = temp
-	}
-	fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
-	fmt.Println("║                         📊 Data Diurutkan Berdasarkan Nama Pemilik (A-Z) 📊                        ║")
-	fmt.Println("╠════╦══════════════╦══════════════════════╦══════════════════════════╦══════╦═══════════════════════╣")
-	fmt.Println("║ No │ ID Hewan     │ Jenis Hewan          │ Nama Hewan               │ Umur │ Nama Pemilik          ║")
-	fmt.Println("╠════╬══════════════╬══════════════════════╬══════════════════════════╬══════╬═══════════════════════╣")
-
-	for i := 0; i < jumlahData; i++ {
-		h := dataHewan[i]
-		fmt.Printf("║ %-2d │ %-12s │ %-20s │ %-24s │ %-4d │ %-21s ║\n",
-			i+1, h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
-	}
-	fmt.Println("╚════╩══════════════╩══════════════════════╩══════════════════════════╩══════╩═══════════════════════╝")
-}
-
-func insertionSortUmur() {
-	for i := 1; i < jumlahData; i++ {
-		temp := dataHewan[i]
-		j := i - 1
-		for j >= 0 && dataHewan[j].Umur > temp.Umur {
-			dataHewan[j+1] = dataHewan[j]
-			j--
-		}
-		dataHewan[j+1] = temp
-	}
-	fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
-	fmt.Println("║                  📈 Data Diurutkan Berdasarkan Umur (Termuda -> Tertua) 📈                         ║")
-	fmt.Println("╠════╦══════════════╦══════════════════════╦══════════════════════════╦══════╦═══════════════════════╣")
-	fmt.Println("║ No │ ID Hewan     │ Jenis Hewan          │ Nama Hewan               │ Umur │ Nama Pemilik          ║")
-	fmt.Println("╠════╬══════════════╬══════════════════════╬══════════════════════════╬══════╬═══════════════════════╣")
-
-	for i := 0; i < jumlahData; i++ {
-		h := dataHewan[i]
-		fmt.Printf("║ %-2d │ %-12s │ %-20s │ %-24s │ %-4d │ %-21s ║\n",
-			i+1, h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
-	}
-	fmt.Println("╚════╩══════════════╩══════════════════════╩══════════════════════════╩══════╩═══════════════════════╝")
-}
-
-func selectionSortUmur() {
-	var i, idx, pass int
-	var temp Hewan
-
-	for pass = 0; pass < jumlahData-1; pass++ {
-		idx = pass
-
-		for i = pass + 1; i < jumlahData; i++ {
-			if dataHewan[i].Umur > dataHewan[idx].Umur {
-				idx = i
-			}
-		}
-
-		temp = dataHewan[pass]
-		dataHewan[pass] = dataHewan[idx]
-		dataHewan[idx] = temp
-	}
-	fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
-	fmt.Println("║                  📉 Data Diurutkan Berdasarkan Umur (Tertua -> Termuda) 📉                         ║")
-	fmt.Println("╠════╦══════════════╦══════════════════════╦══════════════════════════╦══════╦═══════════════════════╣")
-	fmt.Println("║ No │ ID Hewan     │ Jenis Hewan          │ Nama Hewan               │ Umur │ Nama Pemilik          ║")
-	fmt.Println("╠════╬══════════════╬══════════════════════╬══════════════════════════╬══════╬═══════════════════════╣")
-
-	for i = 0; i < jumlahData; i++ {
-		h := dataHewan[i]
-		fmt.Printf("║ %-2d │ %-12s │ %-20s │ %-24s │ %-4d │ %-21s ║\n",
-			i+1, h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
-	}
-	fmt.Println("╚════╩══════════════╩══════════════════════╩══════════════════════════╩══════╩═══════════════════════╝")
 }
