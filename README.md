@@ -30,8 +30,8 @@ Program ini dibuat sebagai contoh implementasi struktur data dan algoritma dasar
 ---
 
 ## Pembuat
-###Zaidan Kamil Munadi
-###Roby Ariga Siagian
+### Zaidan Kamil Munadi
+### Roby Ariga Siagian
 
 ---
 
@@ -82,7 +82,7 @@ func searchHewan(dataHewan *ArrHewan, jumlahData *int) {
 }
 ```
 
-##2. Binary Search (Pencarian Biner)
+## 2. Binary Search (Pencarian Biner)
 Binary Search adalah algoritma pencarian yang efisien dan hanya dapat digunakan pada data yang sudah terurut. Algoritma ini bekerja dengan membandingkan elemen target dengan elemen tengah array. Jika tidak cocok, separuh array di mana target tidak mungkin berada akan dieliminasi, dan pencarian dilanjutkan pada separuh sisanya hingga target ditemukan atau interval pencarian kosong.
 
 Implementasi Kode (Pencarian Hewan berdasarkan ID):
@@ -155,7 +155,7 @@ func sortByIDLogic(dataHewan *ArrHewan, jumlahData *int) {
     }
 }
 ```
-##Selection Sort (Pengurutan Seleksi)
+## 3.Selection Sort (Pengurutan Seleksi)
 Selection Sort adalah algoritma pengurutan berbasis perbandingan. Algoritma ini bekerja dengan berulang kali menemukan elemen minimum (atau maksimum, tergantung pada urutan yang diinginkan) dari bagian array yang belum terurut dan menukarnya dengan elemen pertama dari bagian yang belum terurut. Proses ini diulang untuk sisa array.
 
 Implementasi Kode (Pengurutan Umur dari Tertua ke Termuda):
@@ -184,7 +184,7 @@ func selectionSortUmurAndDisplay(dataHewan *ArrHewan, jumlahData *int) {
 	tampilkanData(dataHewan, jumlahData) // Memanggil fungsi display umum
 }
 ```
-##Insertion Sort (Pengurutan Sisip)
+## 4.Insertion Sort (Pengurutan Sisip)
 Insertion Sort adalah algoritma pengurutan sederhana yang membangun array terurut akhir satu elemen pada satu waktu. Algoritma ini mengambil setiap elemen dari input dan memasukkannya ke posisi yang benar dalam bagian array yang sudah terurut. Efisien untuk data kecil atau data yang hampir terurut.
 
 Implementasi Kode:
