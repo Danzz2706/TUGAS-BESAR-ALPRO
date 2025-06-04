@@ -86,103 +86,82 @@ func searchHewan(dataHewan *ArrHewan, jumlahData *int) {
 Binary Search adalah algoritma pencarian yang efisien dan hanya dapat digunakan pada data yang sudah terurut. Algoritma ini bekerja dengan membandingkan elemen target dengan elemen tengah array. Jika tidak cocok, separuh array di mana target tidak mungkin berada akan dieliminasi, dan pencarian dilanjutkan pada separuh sisanya hingga target ditemukan atau interval pencarian kosong.
 
 Implementasi Kode (Pencarian Hewan berdasarkan ID):
-
-Pertama, data diurutkan berdasarkan ID menggunakan fungsi sortByIDLogic (yang merupakan implementasi dari Insertion Sort). Kemudian, binarySearchByID melakukan pencarian.
 ```go
-// Fungsi binarySearchByID
 func binarySearchByID(dataHewan *ArrHewan, jumlahData *int) {
-    var id string
-    fmt.Print("Masukkan ID hewan yang dicari: (contoh K001): ")
-    fmt.Scanln(&id)
-    fmt.Println()
+	var id string
+	fmt.Print("Masukkan ID hewan yang dicari: (contoh K001): ")
+	fmt.Scanln(&id)
 
-    if *jumlahData == 0 {
-        fmt.Println("Tidak ada data untuk dicari.")
-        return
-    }
-    sortByIDLogic(dataHewan, jumlahData) // Data harus terurut berdasarkan ID
+	if *jumlahData == 0 {
+		fmt.Println("Tidak ada data.")
+		return
+	}
 
-    low := 0
-    high := *jumlahData - 1
-    found := false
-    var hewanDitemukan Hewan
+	sortByID(dataHewan, jumlahData)
 
-    // Loop untuk Binary Search
-    for low <= high {
-        mid := (low + high) / 2
-        if (*dataHewan)[mid].ID == id {
-            hewanDitemukan = (*dataHewan)[mid]
-            found = true
-            break
-        } else if (*dataHewan)[mid].ID < id { // Perbandingan string (case-sensitive)
-            low = mid + 1
-        } else {
-            high = mid - 1
-        }
-    }
+	low := 0
+	high := *jumlahData - 1
+	found := false
 
-    if !found {
-        fmt.Println("╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
-        fmt.Println("║                             🔍 HASIL PENCARIAN BINARY SEARCH 🔍                               ║")
-        fmt.Println("╠════════════════════════════════════════════════════════════════════════════════════════════════════╣")
-        fmt.Printf("║ Data dengan ID '%-76s' tidak ditemukan.                                ║\n", id)
-        fmt.Println("╚════════════════════════════════════════════════════════════════════════════════════════════════════╝")
-        return
-    }
+	for low <= high {
+		mid := (low + high) / 2
+		if (*dataHewan)[mid].ID == id {
+			h := (*dataHewan)[mid] // Perbaikan: (*dataHewan) bukan (*dataHewAN)
+			fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════╗")
+			fmt.Println("║                                  🔍 HASIL PENCARIAN BINARY SEARCH 🔍                       ║")
+			fmt.Println("╠═════════════╦═══════════════════╦══════════════════════╦═══════════╦═══════════════════════╣")
+			fmt.Println("║ ID Hewan    │ Jenis Hewan       │ Nama Hewan           │ Umur      │ Nama Pemilik          ║")
+			fmt.Println("╠═════════════╬═══════════════════╬══════════════════════╬═══════════╬═══════════════════════╣")
+			fmt.Printf("║ %-11s │ %-17s │ %-20s │ %-9d │ %-21s ║\n", h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
+			fmt.Println("╚═════════════╩═══════════════════╩══════════════════════╩═══════════╩═══════════════════════╝")
+			found = true
+			break
+		} else if (*dataHewan)[mid].ID < id {
+			low = mid + 1
+		} else {
+			high = mid - 1
+		}
+	}
 
-    // Tampilkan data yang ditemukan
-    fmt.Println("╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
-    fmt.Println("║                             🔍 HASIL PENCARIAN BINARY SEARCH 🔍                               ║")
-    fmt.Println("╠═════════════╦═══════════════════╦══════════════════════╦═══════════╦═══════════════════════╣")
-    fmt.Println("║ ID Hewan    │ Jenis Hewan       │ Nama Hewan           │ Umur      │ Nama Pemilik          ║")
-    fmt.Println("╠═════════════╬═══════════════════╬══════════════════════╬═══════════╬═══════════════════════╣")
-    fmt.Printf("║ %-11s │ %-17s │ %-20s │ %-9d │ %-21s ║\n",
-        hewanDitemukan.ID, hewanDitemukan.Jenis, hewanDitemukan.Nama, hewanDitemukan.Umur, hewanDitemukan.Pemilik)
-    fmt.Println("╚═════════════╩═══════════════════╩══════════════════════╩═══════════╩═══════════════════════╝")
-}
-
-// Fungsi sortByIDLogic (menggunakan Insertion Sort untuk mengurutkan berdasarkan ID)
-func sortByIDLogic(dataHewan *ArrHewan, jumlahData *int) {
-    for i := 1; i < *jumlahData; i++ {
-        temp := (*dataHewan)[i]
-        j := i - 1
-        // Algoritma Insertion Sort untuk ID
-        for j >= 0 && (*dataHewan)[j].ID > temp.ID { // Perbandingan string (case-sensitive)
-            (*dataHewan)[j+1] = (*dataHewan)[j]
-            j--
-        }
-        (*dataHewan)[j+1] = temp
-    }
+	if !found {
+		fmt.Println("Data dengan ID tersebut tidak ditemukan.")
+	}
 }
 ```
 ## 3.Selection Sort (Pengurutan Seleksi)
 Selection Sort adalah algoritma pengurutan berbasis perbandingan. Algoritma ini bekerja dengan berulang kali menemukan elemen minimum (atau maksimum, tergantung pada urutan yang diinginkan) dari bagian array yang belum terurut dan menukarnya dengan elemen pertama dari bagian yang belum terurut. Proses ini diulang untuk sisa array.
 
 Implementasi Kode (Pengurutan Umur dari Tertua ke Termuda):
-
-Fungsi selectionSortUmurLogic mengurutkan data hewan berdasarkan umur secara menurun (dari yang tertua). Fungsi selectionSortUmurAndDisplay adalah wrapper yang memanggil logika sorting kemudian menampilkan hasilnya.
 ```go
-// Fungsi selectionSortUmurLogic (pengurutan umur dari tertua ke termuda)
-func selectionSortUmurLogic(dataHewan *ArrHewan, jumlahData *int) { //descending tua -> muda
-	for pass := 0; pass < *jumlahData-1; pass++ {
-		idx := pass // Asumsikan elemen saat ini adalah yang terbesar/tertua
-		for i := pass + 1; i < *jumlahData; i++ {
-			// Cari elemen yang lebih besar/tua dari elemen di 'idx'
+func selectionSortUmur(dataHewan *ArrHewan, jumlahData *int) {
+	var i, idx, pass int
+	var temp Hewan
+
+	for pass = 0; pass < *jumlahData-1; pass++ {
+		idx = pass
+		for i = pass + 1; i < *jumlahData; i++ {
 			if (*dataHewan)[i].Umur > (*dataHewan)[idx].Umur {
-				idx = i // Update indeks elemen terbesar/tertua
+				idx = i
 			}
 		}
-		// Tukar elemen di 'pass' dengan elemen terbesar/tertua yang ditemukan
-		(*dataHewan)[pass], (*dataHewan)[idx] = (*dataHewan)[idx], (*dataHewan)[pass]
+		temp = (*dataHewan)[pass]
+		(*dataHewan)[pass] = (*dataHewan)[idx]
+		(*dataHewan)[idx] = temp
 	}
+	fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                             📉 Data Diurutkan Berdasarkan Umur (Tertua -> Termuda) 📉              ║")
+	fmt.Println("╠════╦══════════════╦══════════════════════╦══════════════════════════╦══════╦═══════════════════════╣")
+	fmt.Println("║ No │ ID Hewan     │ Jenis Hewan          │ Nama Hewan               │ Umur │ Nama Pemilik          ║")
+	fmt.Println("╠════╬══════════════╬══════════════════════╬══════════════════════════╬══════╬═══════════════════════╣")
+
+	for i = 0; i < *jumlahData; i++ {
+		h := (*dataHewan)[i]
+		fmt.Printf("║ %-2d │ %-12s │ %-20s │ %-24s │ %-4d │ %-21s ║\n",
+			i+1, h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
+	}
+	fmt.Println("╚════╩══════════════╩══════════════════════╩══════════════════════════╩══════╩═══════════════════════╝")
 }
 
-// Fungsi wrapper untuk sorting dan menampilkan
-func selectionSortUmurAndDisplay(dataHewan *ArrHewan, jumlahData *int) {
-	selectionSortUmurLogic(dataHewan, jumlahData)
-	fmt.Println("\nData Diurutkan Berdasarkan Umur (Tertua -> Termuda):")
-	tampilkanData(dataHewan, jumlahData) // Memanggil fungsi display umum
-}
 ```
 ## 4.Insertion Sort (Pengurutan Sisip)
 Insertion Sort adalah algoritma pengurutan sederhana yang membangun array terurut akhir satu elemen pada satu waktu. Algoritma ini mengambil setiap elemen dari input dan memasukkannya ke posisi yang benar dalam bagian array yang sudah terurut. Efisien untuk data kecil atau data yang hampir terurut.
@@ -191,49 +170,54 @@ Implementasi Kode:
 
 Pengurutan berdasarkan Nama Pemilik (A-Z):
 ```go
-// Fungsi sortByPemilikLogic (menggunakan Insertion Sort untuk nama pemilik)
-func sortByPemilikLogic(dataHewan *ArrHewan, jumlahData *int) {
-    for i := 1; i < *jumlahData; i++ {
-        temp := (*dataHewan)[i] // Ambil elemen untuk disisipkan
-        j := i - 1
-        // Geser elemen yang lebih besar dari 'temp' ke kanan
-        for j >= 0 && (*dataHewan)[j].Pemilik > temp.Pemilik { // Perbandingan string (case-sensitive)
-            (*dataHewan)[j+1] = (*dataHewan)[j]
-            j--
-        }
-        // Sisipkan 'temp' ke posisi yang benar
-        (*dataHewan)[j+1] = temp
-    }
-}
+func sortByPemilik(dataHewan *ArrHewan, jumlahData *int) {
+	for i := 1; i < *jumlahData; i++ {
+		temp := (*dataHewan)[i]
+		j := i - 1
+		for j >= 0 && (*dataHewan)[j].Pemilik > temp.Pemilik {
+			(*dataHewan)[j+1] = (*dataHewan)[j]
+			j--
+		}
+		(*dataHewan)[j+1] = temp
+	}
+	fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                             📊 Data Diurutkan Berdasarkan Nama Pemilik (A-Z) 📊            	     ║")
+	fmt.Println("╠════╦══════════════╦══════════════════════╦══════════════════════════╦══════╦═══════════════════════╣")
+	fmt.Println("║ No │ ID Hewan     │ Jenis Hewan          │ Nama Hewan               │ Umur │ Nama Pemilik          ║")
+	fmt.Println("╠════╬══════════════╬══════════════════════╬══════════════════════════╬══════╬═══════════════════════╣")
 
-// Fungsi wrapper untuk sorting dan menampilkan
-func sortByPemilikAndDisplay(dataHewan *ArrHewan, jumlahData *int) {
-    sortByPemilikLogic(dataHewan, jumlahData)
-    fmt.Println("\nData Diurutkan Berdasarkan Nama Pemilik (A-Z):")
-    tampilkanData(dataHewan, jumlahData)
+	for i := 0; i < *jumlahData; i++ {
+		h := (*dataHewan)[i]
+		fmt.Printf("║ %-2d │ %-12s │ %-20s │ %-24s │ %-4d │ %-21s ║\n",
+			i+1, h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
+	}
+	fmt.Println("╚════╩══════════════╩══════════════════════╩══════════════════════════╩══════╩═══════════════════════╝")
 }
 ```
 Pengurutan berdasarkan Umur (Termuda ke Tertua):
 ```
-// Fungsi insertionSortUmurLogic (pengurutan umur dari termuda ke tertua)
-func insertionSortUmurLogic(dataHewan *ArrHewan, jumlahData *int) { //ascending muda -> tua
-    for i := 1; i < *jumlahData; i++ {
-        temp := (*dataHewan)[i] // Ambil elemen untuk disisipkan
-        j := i - 1
-        // Geser elemen yang lebih besar dari 'temp.Umur' ke kanan
-        for j >= 0 && (*dataHewan)[j].Umur > temp.Umur {
-            (*dataHewan)[j+1] = (*dataHewan)[j]
-            j--
-        }
-        // Sisipkan 'temp' ke posisi yang benar
-        (*dataHewan)[j+1] = temp
-    }
+func insertionSortUmur(dataHewan *ArrHewan, jumlahData *int) {
+	for i := 1; i < *jumlahData; i++ {
+		temp := (*dataHewan)[i]
+		j := i - 1
+		for j >= 0 && (*dataHewan)[j].Umur > temp.Umur {
+			(*dataHewan)[j+1] = (*dataHewan)[j]
+			j--
+		}
+		(*dataHewan)[j+1] = temp
+	}
+	fmt.Println("\n╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                             📈 Data Diurutkan Berdasarkan Umur (Termuda -> Tertua) 📈              ║")
+	fmt.Println("╠════╦══════════════╦══════════════════════╦══════════════════════════╦══════╦═══════════════════════╣")
+	fmt.Println("║ No │ ID Hewan     │ Jenis Hewan          │ Nama Hewan               │ Umur │ Nama Pemilik          ║")
+	fmt.Println("╠════╬══════════════╬══════════════════════╬══════════════════════════╬══════╬═══════════════════════╣")
+
+	for i := 0; i < *jumlahData; i++ {
+		h := (*dataHewan)[i]
+		fmt.Printf("║ %-2d │ %-12s │ %-20s │ %-24s │ %-4d │ %-21s ║\n",
+			i+1, h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
+	}
+	fmt.Println("╚════╩══════════════╩══════════════════════╩══════════════════════════╩══════╩═══════════════════════╝")
 }
 
-// Fungsi wrapper untuk sorting dan menampilkan
-func insertionSortUmurAndDisplay(dataHewan *ArrHewan, jumlahData *int) {
-    insertionSortUmurLogic(dataHewan, jumlahData)
-    fmt.Println("\nData Diurutkan Berdasarkan Umur (Termuda -> Tertua):")
-    tampilkanData(dataHewan, jumlahData)
-}
 ```
