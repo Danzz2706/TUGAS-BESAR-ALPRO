@@ -195,7 +195,7 @@ func sortByPemilik(dataHewan *ArrHewan, jumlahData *int) {
 }
 ```
 Pengurutan berdasarkan Umur (Termuda ke Tertua):
-```
+```go
 func insertionSortUmur(dataHewan *ArrHewan, jumlahData *int) {
 	for i := 1; i < *jumlahData; i++ {
 		temp := (*dataHewan)[i]
