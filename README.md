@@ -1,96 +1,239 @@
-# Pendataan Hewan
+# 🐾 Manajemen Data Hewan 🐾
 
-Sebuah aplikasi baris perintah (command-line) yang ditulis dalam bahasa Go untuk mengelola data hewan. Aplikasi ini memungkinkan pengguna untuk menambah, menampilkan, mencari, mengurutkan, mengedit, menghapus, dan melihat statistik data hewan. Program diinisialisasi dengan 20 data hewan sampel.
+Program konsol sederhana yang ditulis dalam bahasa Go untuk mengelola data hewan peliharaan. Aplikasi ini memungkinkan pengguna untuk melakukan operasi CRUD (Create, Read, Update, Delete) pada data hewan, serta menyediakan fungsionalitas pencarian dan pengurutan data menggunakan berbagai algoritma dasar.
+
+Program ini dibuat sebagai contoh implementasi struktur data dan algoritma dasar dalam Go, dengan fokus pada penggunaan pustaka standar `fmt` untuk interaksi pengguna.
+
+---
+
+## 📋 Fitur Utama
+
+* **Manajemen Data**: Tambah, tampilkan, edit, dan hapus data hewan.
+* **Kalkulasi**: Menghitung rata-rata umur hewan.
+* **Analisis Data**: Menemukan hewan tertua dan termuda.
+* **Pencarian**:
+    * Berdasarkan nama panggilan (menggunakan Sequential Search).
+    * Berdasarkan ID hewan (menggunakan Binary Search, setelah data diurutkan).
+* **Pengurutan**:
+    * Berdasarkan nama pemilik (A-Z, menggunakan Insertion Sort).
+    * Berdasarkan umur dari yang tertua (menggunakan Selection Sort).
+    * Berdasarkan umur dari yang termuda (menggunakan Insertion Sort).
+* **Statistik**: Menampilkan statistik jumlah hewan berdasarkan jenisnya.
+
+---
+
+## 🛠️ Teknologi yang Digunakan
+
+* **Go (Golang)**: Bahasa pemrograman utama.
+* **Pustaka Standar Go**: Terutama pustaka `fmt` untuk semua operasi input/output.
+
+---
 
 ## Pembuat
+###Zaidan Kamil Munadi
+###Roby Ariga Siagian
 
-Proyek ini dibuat sebagai kolaborasi dengan kontribusi yang setara oleh:
+---
 
-* Zaidan Kamil Munadi
-* Roby Ariga Siagian
+## 🧠 Algoritma yang Digunakan
 
-## Fitur
+Berikut adalah penjelasan dan implementasi kode untuk algoritma pencarian dan pengurutan utama yang digunakan dalam proyek ini. Kode diambil dari file `main.go`.
 
-Program ini menyediakan antarmuka berbasis menu dengan fungsionalitas sebagai berikut:
+### 1. Sequential Search (Pencarian Berurutan)
 
-1.  **Tambah Data Hewan:** Memungkinkan penambahan data hewan baru meliputi ID, Jenis, Nama, Umur, dan Nama Pemilik.
-2.  **Tampilkan Semua Data:** Menampilkan semua data hewan yang tersimpan dalam format tabel.
-3.  **Hitung Rata-rata Umur:** Menghitung dan menampilkan rata-rata umur dari semua hewan.
-4.  **Cari Hewan Tertua dan Termuda:** Mengidentifikasi dan menampilkan data hewan tertua dan termuda.
-5.  **Sorting Berdasarkan Nama Pemilik (A-Z):** Mengurutkan dan menampilkan data hewan berdasarkan nama pemilik secara alfabetis (A-Z) menggunakan algoritma Insertion Sort.
-6.  **Cari Hewan Berdasarkan Nama:** Mencari hewan berdasarkan namanya (sensitif terhadap huruf besar/kecil) dan menampilkan data yang cocok.
-7.  **Cari Hewan Berdasarkan ID (Binary Search):** Mencari hewan berdasarkan ID-nya. Data akan diurutkan terlebih dahulu berdasarkan ID (menggunakan Insertion Sort) untuk memungkinkan pencarian dengan Binary Search.
-8.  **Edit Data Hewan:** Memungkinkan modifikasi detail hewan yang sudah ada (Jenis, Nama, Umur, Pemilik) berdasarkan ID-nya.
-9.  **Hapus Data Hewan:** Menghapus data hewan dari sistem berdasarkan ID-nya.
-10. **Urutkan Berdasarkan Umur Dari Tertua:** Mengurutkan dan menampilkan data hewan berdasarkan umur, dari yang tertua hingga termuda, menggunakan algoritma Selection Sort.
-11. **Urutkan Berdasarkan Umur Dari Termuda (Insertion Sort):** Mengurutkan dan menampilkan data hewan berdasarkan umur, dari yang termuda hingga tertua, menggunakan algoritma Insertion Sort.
-12. **Statistik Berdasarkan Jenis:** Menampilkan ringkasan jumlah hewan untuk setiap jenis yang ada dalam data.
-0.  **Keluar:** Untuk keluar dari program.
+Sequential Search adalah algoritma pencarian sederhana yang bekerja dengan cara memeriksa setiap elemen dalam kumpulan data secara berurutan, satu per satu, hingga elemen yang dicari ditemukan atau seluruh elemen telah diperiksa. Algoritma ini cocok untuk data yang tidak terurut atau kumpulan data kecil.
 
-## Prasyarat
+**Implementasi Kode (Pencarian Hewan berdasarkan Nama Panggilan):**
 
-* Go compiler terinstal di sistem Anda. Anda dapat mengunduhnya dari [golang.org](https://golang.org/dl/).
+Fungsi `searchHewan` melakukan iterasi pada array `dataHewan` untuk menemukan kecocokan berdasarkan nama. Perbandingan nama bersifat case-sensitive.
 
-## Cara Menjalankan
+```go
+// Fungsi searchHewan (pencarian berdasarkan nama)
+func searchHewan(dataHewan *ArrHewan, jumlahData *int) {
+	var nama string
+	fmt.Print("Masukkan nama panggilan hewan yang dicari: (contoh: Oyen): ")
+	fmt.Scanln(&nama)
+	fmt.Println()
 
-1.  **Clone repositori atau unduh berkas `pendataanHewan.go`.**
-    ```bash
-    # Jika Anda memiliki git terinstal
-    # git clone <url_repositori>
-    # cd <direktori_repositori>
-    ```
-    Jika Anda hanya memiliki berkas `.go`, simpan di sebuah direktori pada komputer Anda.
+	ditemukan := false
+	// Bagian tampilan header tabel
+	fmt.Println("╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                                       🔎 HASIL PENCARIAN 🔎                                       ║")
+	fmt.Println("╠════╦═════════════╦═══════════════════╦══════════════════════╦═══════════╦═══════════════════════╣")
+	fmt.Println("║ No │ ID Hewan    │ Jenis Hewan       │ Nama Hewan           │ Umur      │ Nama Pemilik          ║")
+	fmt.Println("╠════╬═════════════╬═══════════════════╬══════════════════════╬═══════════╬═══════════════════════╣")
 
-2.  **Buka terminal atau command prompt Anda.**
+	count := 0
+	// Loop untuk Sequential Search
+	for i := 0; i < *jumlahData; i++ {
+		if (*dataHewan)[i].Nama == nama { // Perbandingan langsung (case-sensitive)
+			h := (*dataHewan)[i]
+			count++
+			fmt.Printf("║ %-2d │ %-11s │ %-17s │ %-20s │ %-9d │ %-21s ║\n",
+				count, h.ID, h.Jenis, h.Nama, h.Umur, h.Pemilik)
+			ditemukan = true
+		}
+	}
 
-3.  **Navigasi ke direktori tempat berkas `pendataanHewan.go` disimpan.**
-    ```bash
-    cd path/to/your/directory
-    ```
+	if !ditemukan {
+		fmt.Println("║                                    Data tidak ditemukan.                                        ║")
+	}
+	fmt.Println("╚════╩═════════════╩═══════════════════╩══════════════════════╩═══════════╩═══════════════════════╝")
+}
+```
 
-4.  **Kompilasi program Go:**
-    ```bash
-    go build pendataanHewan.go
-    ```
-    Ini akan membuat berkas eksekusi bernama `pendataanHewan` (atau `pendataanHewan.exe` di Windows).
+##2. Binary Search (Pencarian Biner)
+Binary Search adalah algoritma pencarian yang efisien dan hanya dapat digunakan pada data yang sudah terurut. Algoritma ini bekerja dengan membandingkan elemen target dengan elemen tengah array. Jika tidak cocok, separuh array di mana target tidak mungkin berada akan dieliminasi, dan pencarian dilanjutkan pada separuh sisanya hingga target ditemukan atau interval pencarian kosong.
 
-5.  **Jalankan berkas eksekusi:**
-    * Di macOS/Linux:
-        ```bash
-        ./pendataanHewan
-        ```
-    * Di Windows:
-        ```bash
-        .\pendataanHewan.exe
-        ```
+Implementasi Kode (Pencarian Hewan berdasarkan ID):
 
-    Sebagai alternatif, Anda dapat menjalankan program secara langsung tanpa mengkompilasi berkas eksekusi terpisah menggunakan:
-    ```bash
-    go run pendataanHewan.go
-    ```
+Pertama, data diurutkan berdasarkan ID menggunakan fungsi sortByIDLogic (yang merupakan implementasi dari Insertion Sort). Kemudian, binarySearchByID melakukan pencarian.
+```go
+// Fungsi binarySearchByID
+func binarySearchByID(dataHewan *ArrHewan, jumlahData *int) {
+    var id string
+    fmt.Print("Masukkan ID hewan yang dicari: (contoh K001): ")
+    fmt.Scanln(&id)
+    fmt.Println()
 
-## Penggunaan
+    if *jumlahData == 0 {
+        fmt.Println("Tidak ada data untuk dicari.")
+        return
+    }
+    sortByIDLogic(dataHewan, jumlahData) // Data harus terurut berdasarkan ID
 
-Setelah program berjalan, Anda akan disajikan sebuah menu. Masukkan nomor yang sesuai dengan tindakan yang ingin Anda lakukan dan tekan Enter. Ikuti petunjuk di layar untuk setiap opsi.
+    low := 0
+    high := *jumlahData - 1
+    found := false
+    var hewanDitemukan Hewan
 
-## Struktur Kode
+    // Loop untuk Binary Search
+    for low <= high {
+        mid := (low + high) / 2
+        if (*dataHewan)[mid].ID == id {
+            hewanDitemukan = (*dataHewan)[mid]
+            found = true
+            break
+        } else if (*dataHewan)[mid].ID < id { // Perbandingan string (case-sensitive)
+            low = mid + 1
+        } else {
+            high = mid - 1
+        }
+    }
 
-* **`pendataanHewan.go`**: Berkas utama yang berisi semua kode sumber.
-* **`Hewan` struct**: Mendefinisikan struktur untuk menyimpan data hewan:
-    * `ID` (string): Pengidentifikasi unik untuk hewan.
-    * `Jenis` (string): Jenis atau spesies hewan.
-    * `Nama` (string): Nama hewan.
-    * `Umur` (int): Usia hewan dalam tahun.
-    * `Pemilik` (string): Nama pemilik hewan.
-* **`dataHewan [maxHewan]Hewan`**: Sebuah array yang menyimpan data hewan. `maxHewan` adalah konstanta yang diatur ke 100.
-* **`jumlahData int`**: Variabel yang mencatat jumlah data hewan saat ini yang tersimpan dalam array `dataHewan`.
-* **`main()` function**: Menginisialisasi beberapa data sampel dan memanggil fungsi `menu()`.
-* **`menu()` function**: Menampilkan menu utama dan menangani input pengguna untuk menavigasi melalui berbagai fungsionalitas.
-* **Berbagai fungsi** (`tambahData`, `tampilkanData`, `rataRataUmur`, `binarySearchByID`, `selectionSortUmur`, `insertionSortUmur`, dll.): Mengimplementasikan fitur-fitur spesifik yang tercantum dalam menu.
+    if !found {
+        fmt.Println("╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
+        fmt.Println("║                             🔍 HASIL PENCARIAN BINARY SEARCH 🔍                               ║")
+        fmt.Println("╠════════════════════════════════════════════════════════════════════════════════════════════════════╣")
+        fmt.Printf("║ Data dengan ID '%-76s' tidak ditemukan.                                ║\n", id)
+        fmt.Println("╚════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+        return
+    }
 
-## Validasi Input
+    // Tampilkan data yang ditemukan
+    fmt.Println("╔════════════════════════════════════════════════════════════════════════════════════════════════════╗")
+    fmt.Println("║                             🔍 HASIL PENCARIAN BINARY SEARCH 🔍                               ║")
+    fmt.Println("╠═════════════╦═══════════════════╦══════════════════════╦═══════════╦═══════════════════════╣")
+    fmt.Println("║ ID Hewan    │ Jenis Hewan       │ Nama Hewan           │ Umur      │ Nama Pemilik          ║")
+    fmt.Println("╠═════════════╬═══════════════════╬══════════════════════╬═══════════╬═══════════════════════╣")
+    fmt.Printf("║ %-11s │ %-17s │ %-20s │ %-9d │ %-21s ║\n",
+        hewanDitemukan.ID, hewanDitemukan.Jenis, hewanDitemukan.Nama, hewanDitemukan.Umur, hewanDitemukan.Pemilik)
+    fmt.Println("╚═════════════╩═══════════════════╩══════════════════════╩═══════════╩═══════════════════════╝")
+}
 
-Program ini menyertakan validasi input dasar:
-* Kolom ID, Jenis, Nama, dan Pemilik tidak boleh kosong saat menambahkan data baru.
-* Umur tidak boleh negatif.
-* Program memeriksa apakah kapasitas data maksimum (`maxHewan`) telah tercapai sebelum menambahkan data baru.
+// Fungsi sortByIDLogic (menggunakan Insertion Sort untuk mengurutkan berdasarkan ID)
+func sortByIDLogic(dataHewan *ArrHewan, jumlahData *int) {
+    for i := 1; i < *jumlahData; i++ {
+        temp := (*dataHewan)[i]
+        j := i - 1
+        // Algoritma Insertion Sort untuk ID
+        for j >= 0 && (*dataHewan)[j].ID > temp.ID { // Perbandingan string (case-sensitive)
+            (*dataHewan)[j+1] = (*dataHewan)[j]
+            j--
+        }
+        (*dataHewan)[j+1] = temp
+    }
+}
+```
+##Selection Sort (Pengurutan Seleksi)
+Selection Sort adalah algoritma pengurutan berbasis perbandingan. Algoritma ini bekerja dengan berulang kali menemukan elemen minimum (atau maksimum, tergantung pada urutan yang diinginkan) dari bagian array yang belum terurut dan menukarnya dengan elemen pertama dari bagian yang belum terurut. Proses ini diulang untuk sisa array.
+
+Implementasi Kode (Pengurutan Umur dari Tertua ke Termuda):
+
+Fungsi selectionSortUmurLogic mengurutkan data hewan berdasarkan umur secara menurun (dari yang tertua). Fungsi selectionSortUmurAndDisplay adalah wrapper yang memanggil logika sorting kemudian menampilkan hasilnya.
+```go
+// Fungsi selectionSortUmurLogic (pengurutan umur dari tertua ke termuda)
+func selectionSortUmurLogic(dataHewan *ArrHewan, jumlahData *int) { //descending tua -> muda
+	for pass := 0; pass < *jumlahData-1; pass++ {
+		idx := pass // Asumsikan elemen saat ini adalah yang terbesar/tertua
+		for i := pass + 1; i < *jumlahData; i++ {
+			// Cari elemen yang lebih besar/tua dari elemen di 'idx'
+			if (*dataHewan)[i].Umur > (*dataHewan)[idx].Umur {
+				idx = i // Update indeks elemen terbesar/tertua
+			}
+		}
+		// Tukar elemen di 'pass' dengan elemen terbesar/tertua yang ditemukan
+		(*dataHewan)[pass], (*dataHewan)[idx] = (*dataHewan)[idx], (*dataHewan)[pass]
+	}
+}
+
+// Fungsi wrapper untuk sorting dan menampilkan
+func selectionSortUmurAndDisplay(dataHewan *ArrHewan, jumlahData *int) {
+	selectionSortUmurLogic(dataHewan, jumlahData)
+	fmt.Println("\nData Diurutkan Berdasarkan Umur (Tertua -> Termuda):")
+	tampilkanData(dataHewan, jumlahData) // Memanggil fungsi display umum
+}
+```
+##Insertion Sort (Pengurutan Sisip)
+Insertion Sort adalah algoritma pengurutan sederhana yang membangun array terurut akhir satu elemen pada satu waktu. Algoritma ini mengambil setiap elemen dari input dan memasukkannya ke posisi yang benar dalam bagian array yang sudah terurut. Efisien untuk data kecil atau data yang hampir terurut.
+
+Implementasi Kode:
+
+Pengurutan berdasarkan Nama Pemilik (A-Z):
+```go
+// Fungsi sortByPemilikLogic (menggunakan Insertion Sort untuk nama pemilik)
+func sortByPemilikLogic(dataHewan *ArrHewan, jumlahData *int) {
+    for i := 1; i < *jumlahData; i++ {
+        temp := (*dataHewan)[i] // Ambil elemen untuk disisipkan
+        j := i - 1
+        // Geser elemen yang lebih besar dari 'temp' ke kanan
+        for j >= 0 && (*dataHewan)[j].Pemilik > temp.Pemilik { // Perbandingan string (case-sensitive)
+            (*dataHewan)[j+1] = (*dataHewan)[j]
+            j--
+        }
+        // Sisipkan 'temp' ke posisi yang benar
+        (*dataHewan)[j+1] = temp
+    }
+}
+
+// Fungsi wrapper untuk sorting dan menampilkan
+func sortByPemilikAndDisplay(dataHewan *ArrHewan, jumlahData *int) {
+    sortByPemilikLogic(dataHewan, jumlahData)
+    fmt.Println("\nData Diurutkan Berdasarkan Nama Pemilik (A-Z):")
+    tampilkanData(dataHewan, jumlahData)
+}
+```
+Pengurutan berdasarkan Umur (Termuda ke Tertua):
+```
+// Fungsi insertionSortUmurLogic (pengurutan umur dari termuda ke tertua)
+func insertionSortUmurLogic(dataHewan *ArrHewan, jumlahData *int) { //ascending muda -> tua
+    for i := 1; i < *jumlahData; i++ {
+        temp := (*dataHewan)[i] // Ambil elemen untuk disisipkan
+        j := i - 1
+        // Geser elemen yang lebih besar dari 'temp.Umur' ke kanan
+        for j >= 0 && (*dataHewan)[j].Umur > temp.Umur {
+            (*dataHewan)[j+1] = (*dataHewan)[j]
+            j--
+        }
+        // Sisipkan 'temp' ke posisi yang benar
+        (*dataHewan)[j+1] = temp
+    }
+}
+
+// Fungsi wrapper untuk sorting dan menampilkan
+func insertionSortUmurAndDisplay(dataHewan *ArrHewan, jumlahData *int) {
+    insertionSortUmurLogic(dataHewan, jumlahData)
+    fmt.Println("\nData Diurutkan Berdasarkan Umur (Termuda -> Tertua):")
+    tampilkanData(dataHewan, jumlahData)
+}
+```
